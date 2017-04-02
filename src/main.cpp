@@ -2,16 +2,18 @@
 
 #include "Engine.h"
 #include "test.h"
-#include "Shader.h"
+#include "Camera.h"
 
 class MenuState : public GameState
 {
 private:
 	Test test;
 	Shader shader;
+	Camera camera;
 public:
 	MenuState(Engine* ref) : GameState(ref),
-	shader("data/vertex.glsl", "data/fragment.glsl") {}
+	shader("data/vertex.glsl", "data/fragment.glsl"),
+	camera(&shader) {}
 	~MenuState()=default;
 	
 	void enter(GameState* prev) override
@@ -28,6 +30,8 @@ public:
 	{
 		// glClearColor(0, 1, 0, 1);
 		shader.use();
+		camera.attach();
+		
 		test.render();
 	}
 	

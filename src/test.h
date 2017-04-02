@@ -9,6 +9,8 @@ class Test
 private:
 	GLuint VBO;
 	GLuint VAO;
+	
+	GLuint CBO;
 public:
 	Test();
 	~Test()=default;

@@ -20,6 +20,7 @@ public:
 	~Shader()=default;
 	
 	void use();
+	GLuint& getProgram();
 };
 
 #endif
