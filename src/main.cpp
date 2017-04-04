@@ -3,17 +3,21 @@
 #include "Engine.h"
 #include "test.h"
 #include "Camera.h"
+#include "Model.h"
 
 class MenuState : public GameState
 {
 private:
-	Test test;
+	// Test test;
 	Shader shader;
 	Camera camera;
+	Model model;
 public:
 	MenuState(Engine* ref) : GameState(ref),
 	shader("data/vertex.glsl", "data/fragment.glsl"),
-	camera(&shader) {}
+	model("data/Tentacle.fbx"),
+	camera(&shader)
+	{}
 	~MenuState()=default;
 	
 	void enter(GameState* prev) override
@@ -32,7 +36,8 @@ public:
 		shader.use();
 		camera.attach();
 		
-		test.render();
+		// test.render();
+		model.render(&shader);
 	}
 	
 };

@@ -38,6 +38,9 @@ void Mesh::setupMesh()
 
 void Mesh::render(Shader* shader)
 {
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+	
 	GLuint diffuseNr = 1;
 	GLuint specularNr = 1;
 	for (int i = 0; i < textures.size(); i++)
