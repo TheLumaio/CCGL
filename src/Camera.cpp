@@ -9,7 +9,7 @@ Camera::Camera(Shader* shader) :
 void Camera::attach()
 {
 	glm::mat4 projection = glm::perspective(glm::radians(45.f), 1280.f/720.f, 0.1f, 100.f);
-	glm::mat4 view = glm::lookAt(glm::vec3(cos(glfwGetTime())*10,3,3), glm::vec3(0,0,0), glm::vec3(0,1,0));
+	glm::mat4 view = glm::lookAt(glm::vec3(cos(glfwGetTime())*50,30,sin(glfwGetTime())*50), glm::vec3(0,10,0), glm::vec3(0,1,0));
 	glm::mat4 model = glm::mat4(1.f);
 	glm::mat4 mvp = projection * view * model;
 	

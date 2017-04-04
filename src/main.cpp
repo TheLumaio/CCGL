@@ -8,14 +8,13 @@
 class MenuState : public GameState
 {
 private:
-	// Test test;
 	Shader shader;
 	Camera camera;
 	Model model;
 public:
 	MenuState(Engine* ref) : GameState(ref),
 	shader("data/vertex.glsl", "data/fragment.glsl"),
-	model("data/Tentacle.fbx"),
+	model("data/tex/nanosuit2.obj"),
 	camera(&shader)
 	{}
 	~MenuState()=default;
@@ -32,11 +31,10 @@ public:
 	
 	void render() override
 	{
-		// glClearColor(0, 1, 0, 1);
+		glClearColor(0.1, 0.1, 0.1, 1);
 		shader.use();
 		camera.attach();
 		
-		// test.render();
 		model.render(&shader);
 	}
 	

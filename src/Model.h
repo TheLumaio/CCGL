@@ -8,6 +8,9 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+#include <SOIL.h>
+
+GLint TextureFromFile(const char* path, std::string directory);
 
 class Model
 {
@@ -15,11 +18,11 @@ private:
 	std::vector<Mesh> meshes;
 	std::string directory;
 	
-	
 	void loadModel(std::string);
 	void processNode(aiNode*, const aiScene*);
 	Mesh processMesh(aiMesh*, const aiScene*);
 	std::vector<Texture> loadTextures(aiMaterial*, aiTextureType, std::string);
+	
 public:
 	Model(std::string);
 	~Model()=default;

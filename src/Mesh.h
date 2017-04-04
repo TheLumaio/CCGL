@@ -6,6 +6,9 @@
 #include <vector>
 #include <iostream>
 #include <sstream>
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
 #include "Shader.h"
 
 struct Vertex {
@@ -17,6 +20,16 @@ struct Vertex {
 struct Texture {
 	GLuint id;
 	std::string type;
+	aiString path;
+	Texture() {
+		std::cout << "Texture constructor " << this << std::endl;
+		id = -1;
+		type = "";
+		path = "";
+	}
+	~Texture() {
+		std::cout << "Texture destructor " << this << std::endl;
+	}
 };
 
 class Mesh

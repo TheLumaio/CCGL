@@ -32,7 +32,7 @@ void Mesh::setupMesh()
 	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)offsetof(Vertex,texcoords));
 	
-	glBindVertexArray(0); 
+	glBindVertexArray(0);
 	
 }
 
@@ -53,10 +53,10 @@ void Mesh::render(Shader* shader)
 			ss << diffuseNr++;
 		else if (name == "texture_specular")
 			ss << specularNr++;
-			number = ss.str();
-			
-			glUniform1f(glGetUniformLocation(shader->getProgram(), ("material." + name + number).c_str()), i);
-			glBindTexture(GL_TEXTURE_2D, textures[i].id);
+		number = ss.str();
+		
+		glUniform1f(glGetUniformLocation(shader->getProgram(), (name + number).c_str()), i);
+		glBindTexture(GL_TEXTURE_2D, textures[i].id);
 	}
 	glActiveTexture(GL_TEXTURE0);
 	

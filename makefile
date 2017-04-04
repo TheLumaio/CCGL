@@ -7,6 +7,7 @@ LDFLAGS =
 LIBS = \
 	-lglew.dll \
 	-lglfw3	\
+	-lSOIL \
 	-lopengl32\
 	-lwinmm \
 	-lgdi32 \
