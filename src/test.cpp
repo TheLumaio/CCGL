@@ -4,42 +4,42 @@ Test::Test()
 {
 	
 	static const GLfloat vertices[] = {
-	    -1.0f,-1.0f,-1.0f, // triangle 1 : begin
-	    -1.0f,-1.0f, 1.0f,
-	    -1.0f, 1.0f, 1.0f, // triangle 1 : end
-	    1.0f, 1.0f,-1.0f, // triangle 2 : begin
-	    -1.0f,-1.0f,-1.0f,
-	    -1.0f, 1.0f,-1.0f, // triangle 2 : end
-	    1.0f,-1.0f, 1.0f,
-	    -1.0f,-1.0f,-1.0f,
-	    1.0f,-1.0f,-1.0f,
-	    1.0f, 1.0f,-1.0f,
-	    1.0f,-1.0f,-1.0f,
-	    -1.0f,-1.0f,-1.0f,
-	    -1.0f,-1.0f,-1.0f,
-	    -1.0f, 1.0f, 1.0f,
-	    -1.0f, 1.0f,-1.0f,
-	    1.0f,-1.0f, 1.0f,
-	    -1.0f,-1.0f, 1.0f,
-	    -1.0f,-1.0f,-1.0f,
-	    -1.0f, 1.0f, 1.0f,
-	    -1.0f,-1.0f, 1.0f,
-	    1.0f,-1.0f, 1.0f,
-	    1.0f, 1.0f, 1.0f,
-	    1.0f,-1.0f,-1.0f,
-	    1.0f, 1.0f,-1.0f,
-	    1.0f,-1.0f,-1.0f,
-	    1.0f, 1.0f, 1.0f,
-	    1.0f,-1.0f, 1.0f,
-	    1.0f, 1.0f, 1.0f,
-	    1.0f, 1.0f,-1.0f,
-	    -1.0f, 1.0f,-1.0f,
-	    1.0f, 1.0f, 1.0f,
-	    -1.0f, 1.0f,-1.0f,
-	    -1.0f, 1.0f, 1.0f,
-	    1.0f, 1.0f, 1.0f,
-	    -1.0f, 1.0f, 1.0f,
-	    1.0f,-1.0f, 1.0f
+	    -50.0f,-50.0f,-50.0f, // triangle 1 : begin
+	    -50.0f,-50.0f, 50.0f,
+	    -50.0f, 50.0f, 50.0f, // triangle 1 : end
+	    50.0f, 50.0f,-50.0f, // triangle 2 : begin
+	    -50.0f,-50.0f,-50.0f,
+	    -50.0f, 50.0f,-50.0f, // triangle 2 : end
+	    50.0f,-50.0f, 50.0f,
+	    -50.0f,-50.0f,-50.0f,
+	    50.0f,-50.0f,-50.0f,
+	    50.0f, 50.0f,-50.0f,
+	    50.0f,-50.0f,-50.0f,
+	    -50.0f,-50.0f,-50.0f,
+	    -50.0f,-50.0f,-50.0f,
+	    -50.0f, 50.0f, 50.0f,
+	    -50.0f, 50.0f,-50.0f,
+	    50.0f,-50.0f, 50.0f,
+	    -50.0f,-50.0f, 50.0f,
+	    -50.0f,-50.0f,-50.0f,
+	    -50.0f, 50.0f, 50.0f,
+	    -50.0f,-50.0f, 50.0f,
+	    50.0f,-50.0f, 50.0f,
+	    50.0f, 50.0f, 50.0f,
+	    50.0f,-50.0f,-50.0f,
+	    50.0f, 50.0f,-50.0f,
+	    50.0f,-50.0f,-50.0f,
+	    50.0f, 50.0f, 50.0f,
+	    50.0f,-50.0f, 50.0f,
+	    50.0f, 50.0f, 50.0f,
+	    50.0f, 50.0f,-50.0f,
+	    -50.0f, 50.0f,-50.0f,
+	    50.0f, 50.0f, 50.0f,
+	    -50.0f, 50.0f,-50.0f,
+	    -50.0f, 50.0f, 50.0f,
+	    50.0f, 50.0f, 50.0f,
+	    -50.0f, 50.0f, 50.0f,
+	    50.0f,-50.0f, 50.0f
 	};
 	
 	glGenVertexArrays(1, &VAO);
@@ -107,8 +107,8 @@ void Test::render()
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, CBO);
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	// glDisableVertexAttribArray(2);
 
 	glDrawArrays(GL_TRIANGLES, 0, 3*12);

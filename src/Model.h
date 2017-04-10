@@ -9,6 +9,8 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 #include <SOIL.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 GLint TextureFromFile(const char* path, std::string directory);
 
@@ -23,9 +25,13 @@ private:
 	Mesh processMesh(aiMesh*, const aiScene*);
 	std::vector<Texture> loadTextures(aiMaterial*, aiTextureType, std::string);
 	
+	glm::vec3 position;
+	
 public:
 	Model(std::string);
 	~Model()=default;
+	
+	void setPosition(glm::vec3);
 	
 	void render(Shader* shader);
 };

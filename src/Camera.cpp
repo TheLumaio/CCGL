@@ -4,17 +4,52 @@
 Camera::Camera(Shader* shader) :
 	shader(shader)
 {
+	lastx = 1280/2;
+	lasty = 720/2;
+	cameraPos   = glm::vec3(0,0,0);
+	cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+	cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
 }
 
-void Camera::attach()
+void Camera::mouseMove(double x, double y)
 {
-	glm::mat4 projection = glm::perspective(glm::radians(45.f), 1280.f/720.f, 0.1f, 100.f);
-	glm::mat4 view = glm::lookAt(glm::vec3(cos(glfwGetTime())*50,30,sin(glfwGetTime())*50), glm::vec3(0,10,0), glm::vec3(0,1,0));
+	float xoff = x-lastx;
+	float yoff = lasty-y;
+	lastx = x;
+	lasty = y;
+	
+	float sensitivity = 0.05f;
+	xoff *= sensitivity;
+	yoff *= sensitivity;
+	
+	yaw += xoff;
+	pitch += yoff;
+	
+	if (pitch > 89.f) pitch = 89.f;
+	if (pitch < -89.f) pitch = -89.f;
+}
+
+void Camera::update(float dt)
+{
+	glm::vec3 front;
+	front.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
+	front.y = sin(glm::radians(pitch));
+	front.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
+	cameraFront = glm::normalize(front);
+	
+	
+	glm::mat4 projection = glm::perspective(glm::radians(90.f), 1280.f/720.f, 0.1f, 1000.f);
+	glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 	glm::mat4 model = glm::mat4(1.f);
 	glm::mat4 mvp = projection * view * model;
 	
 	GLuint matrixid = glGetUniformLocation(shader->getProgram(), "MVP");
 	glUniformMatrix4fv(matrixid, 1, GL_FALSE, &mvp[0][0]);
 	
-	
 }
+
+void Camera::setPosition(glm::vec3 pos) { cameraPos = pos; }
+
+glm::vec3 & Camera::getPosition() { return cameraPos;   }
+glm::vec3 & Camera::getFront()    { return cameraFront; }
+glm::vec3 & Camera::getUp()       { return cameraUp;    }

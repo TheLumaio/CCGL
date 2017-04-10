@@ -44,22 +44,34 @@ void Engine::initializeEvents()
 
 	glfwSetCharCallback(this->window, [](GLFWwindow* window, unsigned int text)
 	{ static_cast<Engine*>(glfwGetWindowUserPointer(window))->textEvent(window, text); });
+	
+	glfwSetCursorPosCallback(this->window, [](GLFWwindow* window, double x, double y)
+	{ static_cast<Engine*>(glfwGetWindowUserPointer(window))->movedEvent(window, x, y); });
+	
 }
 
 /// events
+
+void Engine::movedEvent(GLFWwindow* window, double x, double y)
+{
+	currentState()->mouseMoved(x,y);
+}
 
 void Engine::mouseEvent(GLFWwindow* window, int button, int action, int mods)
 {
 	switch (action)
 	{
 	case GLFW_PRESS:
+		mouse[button] = true;
 		currentState()->mousePressed(button, mods);
 		break;
 	case GLFW_RELEASE:
+		mouse[button] = false;
 		currentState()->mouseReleased(button, mods);
 		break;
 	default:
-		printf("Unhandled case in %s:%s at %d.", __FILE__, __func__, __LINE__);
+		mouse[button] = false;
+		printf("Unhandled case in %s:%s at %d.\n", __FILE__, __func__, __LINE__);
 		break;
 	}
 }
@@ -74,13 +86,17 @@ void Engine::keyEvent(GLFWwindow* window, int key, int scan, int action, int mod
 	switch (action)
 	{
 	case GLFW_PRESS:
+		keys[key] = true;
 		currentState()->keyPressed(key,mods);
 		break;
 	case GLFW_RELEASE:
+		keys[key] = false;
 		currentState()->keyReleased(key,mods);
 		break;
+	case GLFW_REPEAT:
+		break;
 	default:
-		printf("Unhandled case in %s:%s at %d.", __FILE__, __func__, __LINE__);
+		printf("Unhandled case in %s:%s at %d.\n", __FILE__, __func__, __LINE__);
 		break;
 	}
 }
@@ -100,6 +116,8 @@ void Engine::start()
 	glfwMakeContextCurrent(this->window);
 	while (!glfwWindowShouldClose(this->window))
 	{
+		currentState()->update(0);
+		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
 		currentState()->render();
@@ -128,6 +146,16 @@ int Engine::getHeight() {
 GLFWwindow* Engine::getWindow()
 {
 	return this->window;
+}
+
+bool Engine::isKeyDown(int key)
+{
+	return keys[key];
+}
+
+bool Engine::isMousePressed(int button)
+{
+	return mouse[button];
 }
 
 void Engine::changeState(GameState* state)

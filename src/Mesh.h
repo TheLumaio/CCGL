@@ -15,6 +15,7 @@ struct Vertex {
 	glm::vec3 position;
 	glm::vec3 normal;
 	glm::vec2 texcoords;
+	glm::vec4 color;
 };
 
 struct Texture {

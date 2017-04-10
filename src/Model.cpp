@@ -2,6 +2,7 @@
 
 Model::Model(std::string path)
 {
+	position = glm::vec3(0,0,0);
 	loadModel(path);
 }
 
@@ -44,6 +45,8 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 	std::cout << "Loading model data size ..." << std::endl;
 	vertices.reserve(mesh->mNumVertices);
 	
+	const aiMaterial *mtl = scene->mMaterials[mesh->mMaterialIndex];
+	
 	for (GLuint i = 0; i < mesh->mNumVertices; i++)
 	{
 		Vertex vertex;
@@ -70,6 +73,11 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 			vertex.texcoords = glm::vec2(0,0);
 		}
 		
+		glm::vec4 color(1,1,1,1);
+		aiColor4D diffuse;
+		if (aiGetMaterialColor(mtl, AI_MATKEY_COLOR_DIFFUSE, &diffuse) == AI_SUCCESS)
+			color = glm::vec4(diffuse.r, diffuse.g, diffuse.b, diffuse.a);
+		vertex.color = color;
 		
 		vertices.push_back(vertex);
 	}
@@ -129,8 +137,15 @@ std::vector<Texture> Model::loadTextures(aiMaterial* mat, aiTextureType type, st
 	return _textures;
 }
 
+void Model::setPosition(glm::vec3 pos)
+{
+	position = pos;
+}
+
 void Model::render(Shader* shader)
 {
+	glm::mat4 trans;
+	glm::translate(trans,position);
 	for (int i = 0; i < meshes.size(); i++)
 		meshes[i].render(shader);
 }

@@ -9,17 +9,29 @@
 class Camera
 {
 private:
-	glm::vec3 position;
+	glm::vec3 cameraPos;
+	glm::vec3 cameraFront;
+	glm::vec3 cameraUp;
+	
 	float yaw,pitch,roll;
 	float fov = 45.f;
+	
 	
 	Shader* shader;
 	
 public:
+	float lastx,lasty;
 	Camera(Shader*);
 	~Camera()=default;
 	
-	void attach();
+	void mouseMove(double,double);
+	void update(float);
+	
+	void setPosition(glm::vec3);
+	
+	glm::vec3 & getPosition();
+	glm::vec3 & getFront();
+	glm::vec3 & getUp();
 	
 };
 

@@ -12,9 +12,9 @@ class Engine;
 class GameState
 {
 protected:
-	Engine* gameref;
+	Engine* core;
 public:
-	GameState(Engine* ref) : gameref(ref) {}
+	GameState(Engine* ref) : core(ref) {}
 	virtual ~GameState() {}
 
 	virtual void enter(GameState*) {}
@@ -22,6 +22,7 @@ public:
 
 	virtual void mousePressed  (int, int) {}
 	virtual void mouseReleased (int, int) {}
+	virtual void mouseMoved    (double,double) {}
 	virtual void mouseScrolled (double,double) {}
 	virtual void keyPressed    (int,int) {}
 	virtual void keyReleased   (int,int) {}
@@ -43,12 +44,16 @@ private:
 	void initializeEvents();
 	
 	/// events
+	void movedEvent(GLFWwindow*, double, double);
 	void mouseEvent(GLFWwindow*, int, int, int);
 	void scrollEvent(GLFWwindow*, double, double);
 	void keyEvent(GLFWwindow*, int, int, int, int);
 	void textEvent(GLFWwindow*, unsigned int);
 
 	std::stack<GameState*> states; // maybe use a state handler?
+	
+	bool keys[1024];
+	bool mouse[16];
 	
 public:
 	Engine(std::string, int, int);
@@ -60,6 +65,9 @@ public:
 	int getWidth();
 	int getHeight();
 	GLFWwindow* getWindow();
+	
+	bool isKeyDown(int);
+	bool isMousePressed(int);
 
 	void changeState(GameState*);
 	GameState* currentState();
