@@ -9,6 +9,10 @@ Engine::Engine(std::string title, int width, int height) :
 {
 	glfwInit();
 	createWindow();
+	
+	// I shouldn't need to do this
+	for (int i=0;i<16;i++)
+		mouse[i] = false;
 }
 
 void Engine::createWindow()

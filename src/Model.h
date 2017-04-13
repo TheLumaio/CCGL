@@ -26,12 +26,14 @@ private:
 	std::vector<Texture> loadTextures(aiMaterial*, aiTextureType, std::string);
 	
 	glm::vec3 position;
+	glm::vec3 scale;
 	
 public:
 	Model(std::string);
 	~Model()=default;
 	
 	void setPosition(glm::vec3);
+	void setScale(glm::vec3);
 	
 	void render(Shader* shader);
 };

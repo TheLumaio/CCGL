@@ -4,42 +4,42 @@ Test::Test()
 {
 	
 	static const GLfloat vertices[] = {
-	    -50.0f,-50.0f,-50.0f, // triangle 1 : begin
-	    -50.0f,-50.0f, 50.0f,
-	    -50.0f, 50.0f, 50.0f, // triangle 1 : end
-	    50.0f, 50.0f,-50.0f, // triangle 2 : begin
-	    -50.0f,-50.0f,-50.0f,
-	    -50.0f, 50.0f,-50.0f, // triangle 2 : end
-	    50.0f,-50.0f, 50.0f,
-	    -50.0f,-50.0f,-50.0f,
-	    50.0f,-50.0f,-50.0f,
-	    50.0f, 50.0f,-50.0f,
-	    50.0f,-50.0f,-50.0f,
-	    -50.0f,-50.0f,-50.0f,
-	    -50.0f,-50.0f,-50.0f,
-	    -50.0f, 50.0f, 50.0f,
-	    -50.0f, 50.0f,-50.0f,
-	    50.0f,-50.0f, 50.0f,
-	    -50.0f,-50.0f, 50.0f,
-	    -50.0f,-50.0f,-50.0f,
-	    -50.0f, 50.0f, 50.0f,
-	    -50.0f,-50.0f, 50.0f,
-	    50.0f,-50.0f, 50.0f,
-	    50.0f, 50.0f, 50.0f,
-	    50.0f,-50.0f,-50.0f,
-	    50.0f, 50.0f,-50.0f,
-	    50.0f,-50.0f,-50.0f,
-	    50.0f, 50.0f, 50.0f,
-	    50.0f,-50.0f, 50.0f,
-	    50.0f, 50.0f, 50.0f,
-	    50.0f, 50.0f,-50.0f,
-	    -50.0f, 50.0f,-50.0f,
-	    50.0f, 50.0f, 50.0f,
-	    -50.0f, 50.0f,-50.0f,
-	    -50.0f, 50.0f, 50.0f,
-	    50.0f, 50.0f, 50.0f,
-	    -50.0f, 50.0f, 50.0f,
-	    50.0f,-50.0f, 50.0f
+	    -1.0f,-1.0f,-1.0f, // triangle 1 : begin
+	    -1.0f,-1.0f, 1.0f,
+	    -1.0f, 1.0f, 1.0f, // triangle 1 : end
+	    1.0f, 1.0f,-1.0f, // triangle 2 : begin
+	    -1.0f,-1.0f,-1.0f,
+	    -1.0f, 1.0f,-1.0f, // triangle 2 : end
+	    1.0f,-1.0f, 1.0f,
+	    -1.0f,-1.0f,-1.0f,
+	    1.0f,-1.0f,-1.0f,
+	    1.0f, 1.0f,-1.0f,
+	    1.0f,-1.0f,-1.0f,
+	    -1.0f,-1.0f,-1.0f,
+	    -1.0f,-1.0f,-1.0f,
+	    -1.0f, 1.0f, 1.0f,
+	    -1.0f, 1.0f,-1.0f,
+	    1.0f,-1.0f, 1.0f,
+	    -1.0f,-1.0f, 1.0f,
+	    -1.0f,-1.0f,-1.0f,
+	    -1.0f, 1.0f, 1.0f,
+	    -1.0f,-1.0f, 1.0f,
+	    1.0f,-1.0f, 1.0f,
+	    1.0f, 1.0f, 1.0f,
+	    1.0f,-1.0f,-1.0f,
+	    1.0f, 1.0f,-1.0f,
+	    1.0f,-1.0f,-1.0f,
+	    1.0f, 1.0f, 1.0f,
+	    1.0f,-1.0f, 1.0f,
+	    1.0f, 1.0f, 1.0f,
+	    1.0f, 1.0f,-1.0f,
+	    -1.0f, 1.0f,-1.0f,
+	    1.0f, 1.0f, 1.0f,
+	    -1.0f, 1.0f,-1.0f,
+	    -1.0f, 1.0f, 1.0f,
+	    1.0f, 1.0f, 1.0f,
+	    -1.0f, 1.0f, 1.0f,
+	    1.0f,-1.0f, 1.0f
 	};
 	
 	glGenVertexArrays(1, &VAO);
@@ -97,8 +97,14 @@ Test::Test()
 	
 }
 
-void Test::render()
+void Test::render(Shader* shader)
 {
+	glm::mat4 model;
+	model = glm::translate(model, glm::vec3(0,-.1,0));
+	model = glm::scale(model, glm::vec3(50, 0.1, 50));
+	GLint modelLoc = glGetUniformLocation(shader->getProgram(), "model");
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, &model[0][0]);
+	
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 	

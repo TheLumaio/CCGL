@@ -11,6 +11,7 @@ private:
 	Shader shader;
 	Camera camera;
 	Model model;
+	Model barrel;
 	Test bounds;
 	
 	bool moving;
@@ -19,6 +20,7 @@ public:
 		GameState(ref),
 		shader("data/vertex.glsl", "data/fragment.glsl"),
 		model("data/fisherman.fbx"),
+		barrel("data/barrel.fbx"),
 		camera(&shader),
 		moving(false)
 	{}
@@ -41,6 +43,7 @@ public:
 	void enter(GameState* prev) override
 	{
 		std::cout << "entered state " << this << " from " << prev << std::endl;
+		glfwSetInputMode(core->getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 	}
 	
 	void update(float dt) override
@@ -75,7 +78,11 @@ public:
 		camera.update(0.1f);
 		
 		model.render(&shader);
-		// bounds.render();
+		
+		barrel.setScale(glm::vec3(5, 5, 5));
+		barrel.setPosition(glm::vec3(16, 0, 5));
+		barrel.render(&shader);
+		bounds.render(&shader);
 	}
 	
 };
@@ -84,7 +91,7 @@ int main(int argc, char** argv)
 {
 	std::cout << "Test" << std::endl;
 	
-	Engine engine("OpenGL test", 1280, 720);
+	Engine engine("StandigeEngine", 1280, 720);
 	engine.changeState(new MenuState(&engine));
 	engine.start();
 	

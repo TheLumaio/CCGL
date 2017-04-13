@@ -39,7 +39,7 @@ void Mesh::setupMesh()
 	
 }
 
-void Mesh::render(Shader* shader)
+void Mesh::render(Shader* shader, glm::vec3 position)
 {
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);

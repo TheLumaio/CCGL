@@ -3,6 +3,7 @@
 Model::Model(std::string path)
 {
 	position = glm::vec3(0,0,0);
+	scale = glm::vec3(1,1,1);
 	loadModel(path);
 }
 
@@ -142,12 +143,22 @@ void Model::setPosition(glm::vec3 pos)
 	position = pos;
 }
 
+void Model::setScale(glm::vec3 sca)
+{
+	scale = sca;
+}
+
 void Model::render(Shader* shader)
 {
-	glm::mat4 trans;
-	glm::translate(trans,position);
+	glm::mat4 model;
+	model = glm::translate(model, position);
+	model = glm::scale(model, scale);
+	GLint modelLoc = glGetUniformLocation(shader->getProgram(), "model");
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, &model[0][0]);
+	
 	for (int i = 0; i < meshes.size(); i++)
-		meshes[i].render(shader);
+		meshes[i].render(shader, position);
+	
 }
 
 GLint TextureFromFile(const char* path, std::string directory)

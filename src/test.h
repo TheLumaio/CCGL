@@ -3,6 +3,9 @@
 #define TEST_H
 
 #include <GL/glew.h>
+#include "Shader.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 class Test
 {
@@ -15,7 +18,7 @@ public:
 	Test();
 	~Test()=default;
 	
-	void render();
+	void render(Shader* shader);
 	
 };
 

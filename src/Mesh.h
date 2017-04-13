@@ -9,6 +9,8 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include "Shader.h"
 
 struct Vertex {
@@ -47,7 +49,7 @@ public:
 	Mesh(std::vector<Vertex>, std::vector<GLuint>, std::vector<Texture>);
 	~Mesh()=default;
 	
-	void render(Shader*);
+	void render(Shader*, glm::vec3);
 	
 	std::vector<Vertex>& getVertices();
 	std::vector<GLuint>& getIndices();

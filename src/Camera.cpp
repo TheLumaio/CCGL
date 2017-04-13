@@ -41,10 +41,14 @@ void Camera::update(float dt)
 	glm::mat4 projection = glm::perspective(glm::radians(90.f), 1280.f/720.f, 0.1f, 1000.f);
 	glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 	glm::mat4 model = glm::mat4(1.f);
-	glm::mat4 mvp = projection * view * model;
+	// glm::mat4 mvp = projection * view * model;
 	
-	GLuint matrixid = glGetUniformLocation(shader->getProgram(), "MVP");
-	glUniformMatrix4fv(matrixid, 1, GL_FALSE, &mvp[0][0]);
+	GLuint matrixid = glGetUniformLocation(shader->getProgram(), "model");
+	glUniformMatrix4fv(matrixid, 1, GL_FALSE, &model[0][0]);
+	matrixid = glGetUniformLocation(shader->getProgram(), "view");
+	glUniformMatrix4fv(matrixid, 1, GL_FALSE, &view[0][0]);
+	matrixid = glGetUniformLocation(shader->getProgram(), "projection");
+	glUniformMatrix4fv(matrixid, 1, GL_FALSE, &projection[0][0]);
 	
 }
 
