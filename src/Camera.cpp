@@ -4,6 +4,9 @@
 Camera::Camera(Shader* shader) :
 	shader(shader)
 {
+	yaw=0;
+	pitch=0;
+	
 	lastx = 1280/2;
 	lasty = 720/2;
 	cameraPos   = glm::vec3(0,0,0);
@@ -54,6 +57,12 @@ void Camera::update(float dt)
 
 void Camera::setPosition(glm::vec3 pos) { cameraPos = pos; }
 
-glm::vec3 & Camera::getPosition() { return cameraPos;   }
-glm::vec3 & Camera::getFront()    { return cameraFront; }
-glm::vec3 & Camera::getUp()       { return cameraUp;    }
+glm::vec3 Camera::getPosition() {
+	return cameraPos;
+}
+glm::vec3 Camera::getFront() {
+	return cameraFront;
+}
+glm::vec3 Camera::getUp() {
+	return cameraUp;
+}

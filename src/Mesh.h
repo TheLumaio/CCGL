@@ -25,13 +25,11 @@ struct Texture {
 	std::string type;
 	aiString path;
 	Texture() {
-		std::cout << "Texture constructor " << this << std::endl;
 		id = -1;
 		type = "";
 		path = "";
 	}
 	~Texture() {
-		std::cout << "Texture destructor " << this << std::endl;
 	}
 };
 

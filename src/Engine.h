@@ -6,6 +6,9 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <stack>
+#include "LightBuffer.h"
+#include "Camera.h"
+#include <glm/gtc/type_ptr.hpp>
 
 class Engine;
 
@@ -55,6 +58,17 @@ private:
 	bool keys[1024];
 	bool mouse[16];
 	
+	Camera* camera;
+	
+	LightBuffer lights;
+	Shader lightShader;
+	GLuint lightVAO;
+	GLuint lightVBO;
+	
+	Shader bufferShader;
+	
+	void renderLights();
+	
 public:
 	Engine(std::string, int, int);
 	~Engine()=default;
@@ -68,6 +82,9 @@ public:
 	
 	bool isKeyDown(int);
 	bool isMousePressed(int);
+	
+	void setCamera(Camera*);
+	Camera* getCamera();
 
 	void changeState(GameState*);
 	GameState* currentState();

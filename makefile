@@ -1,7 +1,7 @@
 SRC = $(wildcard src/*.cpp)
 OBJ = $(patsubst src/%.cpp, obj/%.o, $(SRC))
 CFLAGS = -std=c++14 -LC:/Bin/mingw/lib -IC:/Bin/mingw/include -w -fpermissive
-OUT = build/ccgl.exe
+OUT = build/StandigeEngine.exe
 
 LDFLAGS = 
 LIBS = \

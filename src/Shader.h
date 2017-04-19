@@ -16,8 +16,11 @@ private:
 	const char* getSource(char*);
 	
 public:
+	Shader()=default;
 	Shader(std::string, std::string);
 	~Shader()=default;
+	
+	void load(std::string, std::string);
 	
 	void use();
 	GLuint& getProgram();

@@ -19,11 +19,13 @@ public:
 	MenuState(Engine* ref) :
 		GameState(ref),
 		shader("data/vertex.glsl", "data/fragment.glsl"),
-		model("data/fisherman.fbx"),
+		model("data/tex/nanosuit2.obj"),
 		barrel("data/barrel.fbx"),
 		camera(&shader),
 		moving(false)
-	{}
+	{
+		core->setCamera(&camera);
+	}
 	~MenuState()=default;
 	
 	void mouseMoved(double x, double y) override
@@ -49,7 +51,7 @@ public:
 	void update(float dt) override
 	{
 		
-		model.setPosition(glm::vec3(cos(glfwGetTime()*15), 0, 0));
+		// model.setPosition(glm::vec3(cos(glfwGetTime()*15), 0, 0));
 		
 		if (core->isKeyDown(GLFW_KEY_W)) {
 			camera.setPosition(camera.getPosition() + camera.getFront());
@@ -73,8 +75,9 @@ public:
 	
 	void render() override
 	{
-		glClearColor(0.1, 0.1, 0.1, 1);
+		// glClearColor(0.1, 0.1, 0.1, 1);
 		shader.use();
+		
 		camera.update(0.1f);
 		
 		model.render(&shader);

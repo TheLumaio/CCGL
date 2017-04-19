@@ -29,7 +29,6 @@ void Model::processNode(aiNode* node, const aiScene* scene)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 		meshes.push_back(processMesh(mesh, scene));
-		std::cout << "processed mesh\n" << std::endl;
 	}
 	for (int i = 0; i < node->mNumChildren; i++)
 	{
@@ -43,7 +42,6 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 	std::vector<GLuint> indices;
 	std::vector<Texture> textures;
 
-	std::cout << "Loading model data size ..." << std::endl;
 	vertices.reserve(mesh->mNumVertices);
 	
 	const aiMaterial *mtl = scene->mMaterials[mesh->mMaterialIndex];
@@ -82,7 +80,6 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 		
 		vertices.push_back(vertex);
 	}
-	std::cout << "Loaded vertices size = " << vertices.size() << " out of " << mesh->mNumVertices << std::endl;
 	
 	indices.reserve(mesh->mNumFaces);
 	for (int i = 0; i < mesh->mNumFaces; i++)
@@ -91,7 +88,6 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 		for (int j = 0; j < face.mNumIndices; j++)
 			indices.emplace_back(face.mIndices[j]);
 	}
-	std::cout << "Loaded indices" << std::endl;
 	
 	std::vector<Texture> diffuseMaps;
 	std::vector<Texture> specularMaps;
@@ -106,24 +102,19 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 		specularMaps = loadTextures(material, aiTextureType_SPECULAR, "texture_specular");
 		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 		
-		std::cout << "loaded all textures" << std::endl;
-	} // <-- crash here? what the fuck?
-	std::cout << "Loaded materials" << std::endl;
+	}
 	
 	// diffuseMaps.clear();
 	// specularMaps.clear();
 	
-	std::cout << "Loaded model data?" << std::endl;
 	return Mesh(vertices, indices, textures);
 }
 
 std::vector<Texture> Model::loadTextures(aiMaterial* mat, aiTextureType type, std::string name)
 {
-	std::cout << "loading " << name << "..." << std::endl;
 	std::vector<Texture> _textures;
 	for (int i = 0; i < mat->GetTextureCount(type); i++)
 	{
-		std::cout << "startloop" << std::endl;
 		aiString str;
 		mat->GetTexture(type, i, &str);
 		Texture texture;
@@ -131,10 +122,7 @@ std::vector<Texture> Model::loadTextures(aiMaterial* mat, aiTextureType type, st
 		texture.type = name;
 		texture.path = str;
 		_textures.push_back(texture);
-		
-		std::cout << "\t loaded texture \"" << name << "\" with id" << texture.id << std::endl;
 	}
-	std::cout << "exit" << std::endl;
 	return _textures;
 }
 

@@ -2,6 +2,33 @@
 
 Shader::Shader(std::string vfile, std::string ffile)
 {
+	load(vfile, ffile);
+}
+
+
+const char* Shader::getSource(char* path)
+{
+	char* buffer = 0;
+	long length;
+	FILE* f = fopen(path, "rb");
+	if (f)
+	{
+		fseek(f, 0, SEEK_END);
+		length = ftell(f);
+		fseek(f, 0, SEEK_SET);
+		rewind(f);
+		buffer = malloc(length * (sizeof(char)));
+		if (buffer) {
+			fread(buffer, sizeof(char), length, f);
+		}
+		fclose(f);
+		buffer[length-1] = '\0';
+	}
+	return buffer;
+}
+
+void Shader::load(std::string vfile, std::string ffile)
+{
 	const char* vsource = getSource(vfile.c_str());
 	const char* fsource = getSource(ffile.c_str());
 	
@@ -50,28 +77,7 @@ Shader::Shader(std::string vfile, std::string ffile)
 	glDeleteShader(vid);
 	glDeleteShader(fid);
 	
-	std::cout << "Shader compiled" << std::endl;
-}
-
-const char* Shader::getSource(char* path)
-{
-	char* buffer = 0;
-	long length;
-	FILE* f = fopen(path, "rb");
-	if (f)
-	{
-		fseek(f, 0, SEEK_END);
-		length = ftell(f);
-		fseek(f, 0, SEEK_SET);
-		rewind(f);
-		buffer = malloc(length * (sizeof(char)));
-		if (buffer) {
-			fread(buffer, sizeof(char), length, f);
-		}
-		fclose(f);
-		buffer[length-1] = '\0';
-	}
-	return buffer;
+	std::cout << "Shader compiled (" << vfile << ":" << ffile << ")" << std::endl;
 }
 
 void Shader::use()
